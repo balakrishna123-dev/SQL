@@ -1,0 +1,147 @@
+🧩 SQL Constraints – Complete Guide
+🧠 What are Constraints?
+
+Constraints are rules applied on table columns to ensure the accuracy, consistency, and reliability of data in a database.
+
+They help maintain data integrity by restricting invalid data entries.
+
+⚙️ Types of SQL Constraints
+Constraint	Description	Example
+NOT NULL---	Ensures a column cannot have NULL values	                                                           email VARCHAR(100) NOT NULL
+UNIQUE----	Ensures all values in a column are unique	                                                           email VARCHAR(100) UNIQUE
+PRIMARY KEY----	Uniquely identifies each row (combines NOT NULL + UNIQUE)                                       	PRIMARY KEY (customer_id)
+FOREIGN KEY	---Links two tables together	                                                                       FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+CHECK---	Ensures that all values satisfy a specific condition	                                                 CHECK (age >= 18)
+DEFAULT---	Sets a default value if none is provided	                                                           DEFAULT CURRENT_TIMESTAMP
+AUTO_INCREMENT---	Automatically increases a numeric value	id                                                      INT AUTO_INCREMENT
+🧱 1️⃣ NOT NULL Constraint
+
+Ensures that a column must always have a value.
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL
+);
+
+
+🟢 Example (Sakila):
+In the customer table, first_name and last_name are NOT NULL.
+
+🔑 2️⃣ UNIQUE Constraint
+
+Ensures all values in a column are distinct (no duplicates).
+
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE
+);
+
+
+🟢 Example (Sakila):
+email in a user table should be UNIQUE to prevent duplicate logins.
+
+🧩 3️⃣ PRIMARY KEY Constraint
+
+Uniquely identifies each record in a table.
+
+A table can have only one primary key, but it can include multiple columns (composite key).
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50)
+);
+
+
+🟢 Example (Sakila):
+In the actor table, actor_id is the PRIMARY KEY.
+
+🔗 4️⃣ FOREIGN KEY Constraint
+
+Creates a relationship between two tables (parent–child relationship).
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+
+🟢 Example (Sakila):
+rental table → customer_id is a FOREIGN KEY referencing customer(customer_id).
+
+✅ 5️⃣ CHECK Constraint
+
+Ensures that all values in a column meet a condition.
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    age INT CHECK (age >= 18)
+);
+
+
+🟢 Example:
+You can ensure only adult customers can register.
+
+🕓 6️⃣ DEFAULT Constraint
+
+Sets a default value when no value is provided.
+
+CREATE TABLE payments (
+    payment_id INT PRIMARY KEY,
+    amount DECIMAL(10,2) DEFAULT 0.00,
+    payment_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+🟢 Example (Sakila):
+In the payment table, if no date is entered, MySQL can set the current timestamp by default.
+
+🔢 7️⃣ AUTO_INCREMENT Constraint
+
+Automatically generates a unique numeric value for new rows.
+
+CREATE TABLE departments (
+    dept_id INT AUTO_INCREMENT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+
+🟢 Example (Sakila):
+actor_id, film_id, customer_id, etc., are AUTO_INCREMENT in Sakila.
+
+🧩 Combining Multiple Constraints
+
+You can use multiple constraints on the same column or table.
+
+CREATE TABLE employee_details (
+    emp_id INT AUTO_INCREMENT,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    salary DECIMAL(10,2) CHECK (salary > 0),
+    hire_date DATE DEFAULT (CURRENT_DATE),
+    PRIMARY KEY (emp_id)
+);
+
+⚙️ Alter Table – Adding Constraints Later
+-- Add Primary Key
+ALTER TABLE employees ADD CONSTRAINT PK_emp PRIMARY KEY (emp_id);
+
+-- Add Foreign Key
+ALTER TABLE orders ADD CONSTRAINT FK_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+
+-- Add Check Constraint
+ALTER TABLE employee_details ADD CONSTRAINT chk_salary CHECK (salary > 0);
+
+-- Drop a Constraint
+ALTER TABLE employees DROP PRIMARY KEY;
+
+🧾 Summary Table
+Constraint	Ensures	Example
+NOT NULL	Column cannot be NULL	name VARCHAR(50) NOT NULL
+UNIQUE	Values must be unique	email UNIQUE
+PRIMARY KEY	Unique + Not Null	PRIMARY KEY (id)
+FOREIGN KEY	Maintains referential integrity	FOREIGN KEY (cust_id)
+CHECK	Column must satisfy a condition	CHECK (age >= 18)
+DEFAULT	Sets a default value	DEFAULT CURRENT_TIMESTAMP
+AUTO_INCREMENT	Auto-numbering	id INT AUTO_INCREME
