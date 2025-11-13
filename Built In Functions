@@ -1,0 +1,91 @@
+1️⃣ String Functions
+
+Used to work with text or character data (CHAR, VARCHAR, TEXT).
+
+
+
+| **Function**                                 | **Description**                 | **Example**                                         | **Output**   |
+| -------------------------------------------- | ------------------------------- | --------------------------------------------------- | ------------ |
+| `LENGTH(str)`                                | Returns the length of a string. | `SELECT LENGTH('Bala');`                            | 4            |
+| `UPPER(str)` / `UCASE(str)`                  | Converts text to uppercase.     | `SELECT UPPER('sql');`                              | SQL          |
+| `LOWER(str)` / `LCASE(str)`                  | Converts text to lowercase.     | `SELECT LOWER('SQL');`                              | sql          |
+| `CONCAT(a, b, …)`                            | Joins two or more strings.      | `SELECT CONCAT('Data', 'Engineer');`                | DataEngineer |
+| `SUBSTRING(str, start, length)`              | Extracts a part of a string.    | `SELECT SUBSTRING('Database', 1, 4);`               | Data         |
+| `REPLACE(str, from, to)`                     | Replaces a substring.           | `SELECT REPLACE('SQL Basics','Basics','Advanced');` | SQL Advanced |
+| `LTRIM(str)`                                 | Removes leading spaces.         | `SELECT LTRIM('  Bala');`                           | Bala         |
+| `RTRIM(str)`                                 | Removes trailing spaces.        | `SELECT RTRIM('Bala  ');`                           | Bala         |
+| `TRIM(str)`                                  | Removes spaces from both sides. | `SELECT TRIM('  Bala  ');`                          | Bala         |
+| `LOCATE(substr, str)` / `INSTR(str, substr)` | Finds position of substring.    | `SELECT LOCATE('a','Balakrishna');`                 | 2            |
+
+Numeric: 
+| **Function**             | **Description**                   | **Example**                 | **Output** |
+| ------------------------ | --------------------------------- | --------------------------- | ---------- |
+| `ABS(x)`                 | Returns absolute value.           | `SELECT ABS(-25);`          | 25         |
+| `CEIL(x)` / `CEILING(x)` | Rounds up to next integer.        | `SELECT CEIL(4.2);`         | 5          |
+| `FLOOR(x)`               | Rounds down to nearest integer.   | `SELECT FLOOR(4.9);`        | 4          |
+| `ROUND(x, d)`            | Rounds to *d* decimal places.     | `SELECT ROUND(12.3456, 2);` | 12.35      |
+| `POWER(x, y)`            | Returns x raised to power y.      | `SELECT POWER(2, 3);`       | 8          |
+| `SQRT(x)`                | Returns square root.              | `SELECT SQRT(16);`          | 4          |
+| `MOD(x, y)`              | Returns remainder.                | `SELECT MOD(10, 3);`        | 1          |
+| `RAND()`                 | Returns random value between 0–1. | `SELECT RAND();`            | 0.67231    |
+| `GREATEST(a, b, c)`      | Returns largest value.            | `SELECT GREATEST(5,10,3);`  | 10         |
+| `LEAST(a, b, c)`         | Returns smallest value.           | `SELECT LEAST(5,10,3);`     | 3          |
+
+3️⃣ Date and Time Functions
+
+Used to work with dates, times, and timestamps.
+
+| **Function**                    | **Description**         | **Example**                                     | **Output**          |
+| ------------------------------- | ----------------------- | ----------------------------------------------- | ------------------- |
+| `NOW()` / `CURRENT_TIMESTAMP()` | Current date and time.  | `SELECT NOW();`                                 | 2025-11-06 10:25:00 |
+| `CURDATE()`                     | Current date.           | `SELECT CURDATE();`                             | 2025-11-06          |
+| `CURTIME()`                     | Current time.           | `SELECT CURTIME();`                             | 10:25:00            |
+| `DATE(date_time)`               | Extracts date part.     | `SELECT DATE('2025-11-06 10:00:00');`           | 2025-11-06          |
+| `YEAR(date)`                    | Extracts year.          | `SELECT YEAR('2025-11-06');`                    | 2025                |
+| `MONTH(date)`                   | Extracts month.         | `SELECT MONTH('2025-11-06');`                   | 11                  |
+| `DAY(date)`                     | Extracts day.           | `SELECT DAY('2025-11-06');`                     | 6                   |
+| `DAYNAME(date)`                 | Returns weekday name.   | `SELECT DAYNAME('2025-11-06');`                 | Thursday            |
+| `DATEDIFF(d1, d2)`              | Days between two dates. | `SELECT DATEDIFF('2025-11-06','2025-10-30');`   | 7                   |
+| `ADDDATE(date, INTERVAL n DAY)` | Adds days to date.      | `SELECT ADDDATE('2025-11-06', INTERVAL 5 DAY);` | 2025-11-11          |
+| `SUBDATE(date, INTERVAL n DAY)` | Subtracts days.         | `SELECT SUBDATE('2025-11-06', INTERVAL 3 DAY);` | 2025-11-03          |
+
+
+🔹 4️⃣ Aggregate Functions
+
+Used with GROUP BY to summarize data.
+
+| **Function** | **Description** | **Example (sakila)**                 | **Output** |
+| ------------ | --------------- | ------------------------------------ | ---------- |
+| `COUNT()`    | Counts rows.    | `SELECT COUNT(*) FROM customer;`     | 599        |
+| `SUM()`      | Total sum.      | `SELECT SUM(amount) FROM payment;`   | 48235.90   |
+| `AVG()`      | Average value.  | `SELECT AVG(amount) FROM payment;`   | 4.56       |
+| `MIN()`      | Minimum value.  | `SELECT MIN(rental_rate) FROM film;` | 0.99       |
+| `MAX()`      | Maximum value.  | `SELECT MAX(rental_rate) FROM film;` | 4.99       |
+
+🔹 5️⃣ Conversion Functions
+
+| **Function**          | **Description**                    | **Example**                           | **Output** |
+| --------------------- | ---------------------------------- | ------------------------------------- | ---------- |
+| `CAST(expr AS type)`  | Converts to a specified data type. | `SELECT CAST('100' AS SIGNED);`       | 100        |
+| `CONVERT(expr, type)` | Converts data type (same as CAST). | `SELECT CONVERT('2025-11-06', DATE);` | 2025-11-06 |
+| `FORMAT(num, d)`      | Formats number to `d` decimals.    | `SELECT FORMAT(1234.5678, 2);`        | 1,234.57   |
+
+🔹 6️⃣ Conditional Functions
+| **Function**                          | **Description**                          | **Example**                                         | **Output** |
+| ------------------------------------- | ---------------------------------------- | --------------------------------------------------- | ---------- |
+| `IF(condition, true_val, false_val)`  | If-else logic.                           | `SELECT IF(10>5,'Yes','No');`                       | Yes        |
+| `CASE WHEN ... THEN ... ELSE ... END` | Multi-condition logic.                   | `SELECT CASE WHEN 5>10 THEN 'High' ELSE 'Low' END;` | Low        |
+| `COALESCE(a,b,c)`                     | Returns first non-null value.            | `SELECT COALESCE(NULL,NULL,'Bala');`                | Bala       |
+| `NULLIF(a,b)`                         | Returns NULL if equal, else first value. | `SELECT NULLIF(10,10);`                             | NULL       |
+
+
+🔹 7️⃣ System / Metadata Functions
+| **Function** | **Description**                | **Example**          |
+| ------------ | ------------------------------ | -------------------- |
+| `DATABASE()` | Returns current database name. | `SELECT DATABASE();` |
+| `USER()`     | Returns current username.      | `SELECT USER();`     |
+| `VERSION()`  | Returns SQL version.           | `SELECT VERSION();`  |
+
+
+
+
