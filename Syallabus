@@ -1,0 +1,148 @@
+🧩 SQL Syllabus – Topic Wise
+1. Introduction to SQL
+
+What is SQL
+
+What is Database, DBMS, and RDBMS
+
+Types of SQL statements (DDL, DML, DCL, TCL, DQL)
+
+Database design basics (tables, rows, columns, relationships)
+
+Schema and normalization (1NF, 2NF, 3NF)
+
+2. DDL – Data Definition Language
+
+CREATE, ALTER, DROP, TRUNCATE, RENAME
+
+Constraints: PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT NULL, CHECK, DEFAULT
+
+3. DML – Data Manipulation Language
+
+INSERT
+
+UPDATE
+
+DELETE
+
+4. DQL – Data Query Language
+
+SELECT
+
+WHERE clause (AND, OR, NOT, IN, BETWEEN, LIKE, IS NULL)
+
+ORDER BY, DISTINCT, LIMIT
+
+5. Aggregate and Scalar Functions
+
+COUNT, SUM, AVG, MIN, MAX
+
+String functions (CONCAT, SUBSTRING, UPPER, LOWER)
+
+Date functions (NOW, YEAR, MONTH, DATEDIFF)
+
+Mathematical functions (ROUND, CEIL, FLOOR)
+
+6. Joins
+
+INNER JOIN
+
+LEFT JOIN
+
+RIGHT JOIN
+
+FULL OUTER JOIN
+
+CROSS JOIN
+
+SELF JOIN
+
+7. Grouping and Filtering
+
+GROUP BY
+
+HAVING
+
+ORDER BY
+
+8. Subqueries
+
+Single-row subquery
+
+Multi-row subquery
+
+Correlated subquery
+
+Subquery in FROM clause
+
+9. Views
+
+CREATE VIEW
+
+ALTER VIEW
+
+DROP VIEW
+
+Materialized Views
+
+10. Indexes
+
+Creating and dropping indexes
+
+Clustered and non-clustered indexes
+
+Query performance optimization
+
+11. Transactions and TCL
+
+COMMIT
+
+ROLLBACK
+
+SAVEPOINT
+
+SET TRANSACTION
+
+12. DCL – Data Control Language
+
+GRANT
+
+REVOKE
+
+13. Advanced SQL Concepts
+
+Window functions (ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD)
+
+Common Table Expressions (CTE)
+
+Recursive queries
+
+CASE statements
+
+Pivot and Unpivot
+
+Stored procedures and user-defined functions
+
+14. Data Engineering–Specific SQL
+
+Data cleaning and transformation
+
+Handling duplicates and nulls
+
+ETL and staging tables
+
+Query optimization and indexing
+
+Working with BigQuery, Snowflake, and SparkSQL
+
+15. Real-Time Project Topics
+
+Retail sales analysis
+
+Customer churn analysis
+
+Employee performance analytics
+
+Data warehouse star schema design
+
+SQL ETL data validation and reporting
