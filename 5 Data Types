@@ -1,0 +1,128 @@
+🧠 SQL Data Types — Complete Guide
+🟩 1️⃣ Numeric Data Types
+
+Used to store numbers (integers, decimals, and floating-point values).
+
+Type	Description	Example
+INT / INTEGER	Whole numbers (no decimal).	10
+SMALLINT	Smaller range of integers (saves space).	100
+BIGINT	Large integer values.	9876543210
+TINYINT (MySQL)	Very small integer (–128 to 127).	120
+DECIMAL(p, s) / NUMERIC(p, s)	Exact fixed-point numbers — p = total digits, s = digits after decimal.	DECIMAL(10,2) → 12345.67
+FLOAT	Approximate decimal value (less precise).	3.14159
+DOUBLE / REAL	Double-precision floating number.	123.456789
+BIT	Binary (0 or 1).	1
+
+🟢 Example:
+
+CREATE TABLE numbers_example (
+    id INT,
+    price DECIMAL(10,2),
+    rating FLOAT,
+    quantity SMALLINT
+);
+
+🟦 2️⃣ Character (String) Data Types
+
+Used for storing text, characters, and strings.
+
+Type	Description	Example
+CHAR(n)	Fixed-length string (pads with spaces).	CHAR(5) → 'AB' stored as 'AB '
+VARCHAR(n)	Variable-length string (recommended).	VARCHAR(50) → 'John'
+TEXT / CLOB	Very long text (e.g., descriptions, comments).	'This is a long paragraph...'
+NCHAR(n)	Fixed-length Unicode string.	NCHAR(10)
+NVARCHAR(n)	Variable-length Unicode string.	NVARCHAR(50)
+
+🟢 Example:
+
+CREATE TABLE text_example (
+    first_name VARCHAR(50),
+    description TEXT
+);
+
+🟨 3️⃣ Date & Time Data Types
+
+Used to store dates, times, or timestamps.
+
+Type	Description	Example
+DATE	Stores only date (YYYY-MM-DD).	'2025-11-06'
+TIME	Stores only time (HH:MM:SS).	'14:30:00'
+DATETIME	Stores both date and time.	'2025-11-06 14:30:00'
+TIMESTAMP	Similar to DATETIME but adjusts with timezone/UTC.	'2025-11-06 19:00:00'
+YEAR (MySQL)	Stores year (4 digits).	2025
+
+🟢 Example:
+
+CREATE TABLE datetime_example (
+    created_date DATE,
+    created_time TIME,
+    last_updated TIMESTAMP
+);
+
+🟧 4️⃣ Binary Data Types
+
+Used for images, files, or binary objects.
+
+Type	Description	Example
+BINARY(n)	Fixed-length binary data.	-
+VARBINARY(n)	Variable-length binary data.	-
+BLOB (Binary Large Object)	Large binary data (images, files).	-
+
+🟢 Example:
+
+CREATE TABLE binary_example (
+    file_id INT,
+    file_data BLOB
+);
+
+🟪 5️⃣ Boolean Data Type
+Type	Description	Example
+BOOLEAN / BOOL	Stores TRUE or FALSE (internally 1 or 0).	TRUE / FALSE
+
+🟢 Example:
+
+CREATE TABLE bool_example (
+    is_active BOOLEAN
+);
+
+🟫 6️⃣ JSON & XML Data Types
+Type	Description	Example
+JSON (MySQL, PostgreSQL)	Stores JSON data (structured key-value).	'{"name": "Bala", "age": 30}'
+XML (SQL Server, Oracle)	Stores XML formatted data.	<customer><name>Bala</name></customer>
+
+🟢 Example:
+
+CREATE TABLE data_example (
+    details JSON
+);
+
+⚪ 7️⃣ Spatial / Geometry Data Types (Advanced)
+
+Used for geographic or geometric data.
+
+Type	Description	Example
+GEOMETRY	Any geometric shape.	POINT(10 20)
+POINT	X, Y coordinates.	POINT(45.123, 67.890)
+LINESTRING	Sequence of points (path).	-
+POLYGON	Closed shape with multiple points.	-
+⚫ 8️⃣ ENUM and SET (MySQL Only)
+Type	Description	Example
+ENUM('A', 'B', 'C')	One value from a predefined list.	'A'
+SET('A', 'B', 'C')	Multiple values from the list.	'A,B'
+
+🟢 Example:
+
+CREATE TABLE enum_example (
+    status ENUM('Active', 'Inactive', 'Pending')
+);
+
+🔵 Summary Table
+Category	Common Types
+Numeric	INT, BIGINT, DECIMAL, FLOAT
+String	CHAR, VARCHAR, TEXT
+Date/Time	DATE, TIME, DATETIME, TIMESTAMP
+Binary	BLOB, VARBINARY
+Boolean	BOOLEAN
+JSON/XML	JSON, XML
+Spatial	POINT, GEOMETRY
+Enumeration	ENUM, SET
