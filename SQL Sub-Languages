@@ -1,0 +1,190 @@
+1️⃣ DDL – Data Definition Language
+
+Purpose: Defines and manages database structures (tables, schema).
+
+Command	Description	Example
+CREATE --	Creates a new table or database object	--                                                    CREATE TABLE Employees (emp_id INT PRIMARY KEY, emp_name VARCHAR(50), salary DECIMAL(10,2));
+ALTER	---Modifies an existing table	                                                                    ALTER TABLE Employees ADD department VARCHAR(30);
+DROP	---Deletes a table or object permanently	                                                        DROP TABLE Employees;
+TRUNCATE	--Deletes all records but keeps structure	                                                    TRUNCATE TABLE Employees;
+RENAME----	Renames an existing table	                                                                  RENAME TABLE Employees TO Staff;
+🧠 2️⃣ DML – Data Manipulation Language
+
+Purpose: Used to manipulate or change the data stored in tables.
+
+Command	Description	Example
+INSERT----	Adds new records	                                                                           INSERT INTO Employees (emp_id, emp_name, salary) VALUES (101, 'John', 55000);
+UPDATE----	Modifies existing records                                                                   	UPDATE Employees SET salary = 60000 WHERE emp_id = 101;
+DELETE---	Removes records	                                                                                DELETE FROM Employees WHERE emp_id = 101;
+🔍 3️⃣ DQL – Data Query Language
+
+Purpose: Used to retrieve data from the database.
+
+Command	Description	Example
+SELECT--	Retrieves data	                                                                              SELECT emp_name, salary FROM Employees WHERE department = 'HR';
+🔐 4️⃣ DCL – Data Control Language
+
+Purpose: Manages user privileges and permissions.
+
+Command	Description	Example
+GRANT--	Gives access rights                                                                                         	GRANT SELECT, UPDATE ON Employees TO user1;
+REVOKE---	Removes access rights	                                                                                     REVOKE UPDATE ON Employees FROM user1;
+💾 5️⃣ TCL – Transaction Control Language
+
+Purpose: Manages transactions and ensures data consistency.
+
+Command	Description	Example
+COMMIT------	Saves changes permanently                                                                              	COMMIT;
+ROLLBACK----	Undoes last transaction	                                                                                   ROLLBACK;
+SAVEPOINT-----	Creates a rollback point	                                                                               SAVEPOINT before_update;
+ROLLBACK---- TO	Rolls back to a specific savepoint	                                                                      ROLLBACK TO before_update;
+
+✅ In summary:
+
+Sub Language	Purpose	Example Command
+DDL	Defines structure	CREATE TABLE
+DML	Manipulates data	INSERT, UPDATE
+DQL	Queries data	SELECT
+DCL	Controls permissions	GRANT, REVOKE
+TCL	Manages transactions	COMMIT, ROLLBACK
+
+Examples:
+1:DDL:
+-- Create a new database
+CREATE DATABASE company_db;
+
+-- Select the database
+USE company_db;
+
+-- Create a new table for employees
+CREATE TABLE employees (
+    emp_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    hire_date DATE,
+    salary DECIMAL(10,2)
+);
+
+-- Add a new column to the table
+ALTER TABLE employees ADD COLUMN department VARCHAR(50);
+
+-- Drop a column
+ALTER TABLE employees DROP COLUMN department;
+
+-- Drop the table
+DROP TABLE employees;
+
+DML:2️⃣ DML – Data Manipulation Language
+
+Used to insert, update, and delete data.
+
+Using the Sakila database now:
+
+USE sakila;
+
+-- Insert a new record into actor table
+INSERT INTO actor (first_name, last_name, last_update)
+VALUES ('BALAKRISHNA', 'DATAENGINEER', NOW());
+
+-- Update actor name
+UPDATE actor
+SET first_name = 'BALA'
+WHERE last_name = 'DATAENGINEER';
+
+-- Delete a specific actor
+DELETE FROM actor
+WHERE first_name = 'BALA';
+
+3️⃣ DQL – Data Query Language
+Used to retrieve and query data.
+-- Get all active customers
+SELECT customer_id, first_name, last_name
+FROM customer
+WHERE active = 1;
+
+-- Find top 5 longest films
+SELECT title, length
+FROM film
+ORDER BY length DESC
+LIMIT 5;
+
+-- Get total number of rentals per customer
+SELECT customer_id, COUNT(rental_id) AS total_rentals
+FROM rental
+GROUP BY customer_id
+ORDER BY total_rentals DESC;
+
+
+4️⃣ DCL – Data Control Language
+Used to control access and privileges.
+
+⚙️ These commands are typically run by a database admin.
+
+-- Create a new user
+CREATE USER 'bala_user'@'localhost' IDENTIFIED BY 'password123';
+
+-- Grant read access on Sakila
+GRANT SELECT ON sakila.* TO 'bala_user'@'localhost';
+
+-- Grant full privileges
+GRANT ALL PRIVILEGES ON sakila.* TO 'bala_user'@'localhost';
+
+-- Revoke privileges
+REVOKE INSERT ON sakila.* FROM 'bala_user'@'localhost';
+
+
+5️⃣ TCL – Transaction Control Language
+Used to manage multiple DML operations as a single unit.
+USE sakila;
+
+-- Start a transaction
+START TRANSACTION;
+
+-- Perform some operations
+UPDATE inventory SET store_id = 2 WHERE inventory_id = 10;
+DELETE FROM rental WHERE rental_id = 10000;
+
+-- If successful
+COMMIT;
+
+-- If something goes wrong
+ROLLBACK;
+
+
+✅ Mini Project Flow Example
+Here’s a mini real-world example combining all SQL sublanguages 👇
+-- 1. Create a new database and table (DDL)
+CREATE DATABASE store_db;
+USE store_db;
+
+CREATE TABLE products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    price DECIMAL(10,2),
+    quantity INT
+);
+
+-- 2. Insert data (DML)
+INSERT INTO products (name, price, quantity)
+VALUES ('Laptop', 1200.00, 10),
+       ('Mouse', 25.00, 50),
+       ('Keyboard', 45.00, 30);
+
+-- 3. Query data (DQL)
+SELECT * FROM products WHERE price > 100;
+
+-- 4. Grant access (DCL)
+GRANT SELECT ON store_db.* TO 'bala_user'@'localhost';
+
+-- 5. Use transaction control (TCL)
+START TRANSACTION;
+UPDATE products SET quantity = quantity - 1 WHERE name = 'Laptop';
+COMMIT;
+
+
+🧩 Summary Table
+CategoryPurposeKey CommandsSakila ExampleDDLDefine DB objectsCREATE, ALTER, DROPCreated employees tableDMLManipulate dataINSERT, UPDATE, DELETEInserted into actorDQLRetrieve dataSELECTFetched active customersDCLManage accessGRANT, REVOKEGranted privilegesTCLManage transactionsCOMMIT, ROLLBACKTransaction for rental ops
+
+Would you like me to format this beautifully in GitHub Markdown style (with headings, emojis, and code blocks) so you can directly paste it into your GitHub SQL notes?
+
