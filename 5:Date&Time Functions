@@ -1,0 +1,314 @@
+✅ 1. CURRENT_DATE()
+
+Returns today’s date.
+
+Query:
+SELECT CURRENT_DATE();
+
+Output (example):
+2025-11-14
+
+✅ 2. CURRENT_TIME()
+
+Returns current time.
+
+SELECT CURRENT_TIME();
+
+Output:
+14:25:18
+
+✅ 3. NOW()
+
+Returns current date + time (timestamp).
+
+SELECT NOW();
+
+Output:
+2025-11-14 14:25:18
+
+✅ 4. CURDATE()
+
+Same as CURRENT_DATE.
+
+SELECT CURDATE();
+
+
+Output:
+
+2025-11-14
+
+✅ 5. CURTIME()
+
+Same as CURRENT_TIME.
+
+SELECT CURTIME();
+
+
+Output:
+
+14:25:18
+
+✅ 6. DATE()
+
+Extract only the date part from a datetime.
+
+SELECT DATE('2025-11-14 10:35:20');
+
+
+Output:
+
+2025-11-14
+
+✅ 7. TIME()
+
+Extract time from datetime.
+
+SELECT TIME('2025-11-14 10:35:20');
+
+
+Output:
+
+10:35:20
+
+✅ 8. YEAR(), MONTH(), DAY()
+
+Extract year, month, day.
+
+SELECT YEAR('2024-03-18'), MONTH('2024-03-18'), DAY('2024-03-18');
+
+
+Output:
+
+2024 | 3 | 18
+
+✅ 9. HOUR(), MINUTE(), SECOND()
+
+Extract time components.
+
+SELECT HOUR('10:45:20'), MINUTE('10:45:20'), SECOND('10:45:20');
+
+
+Output:
+
+10 | 45 | 20
+
+✅ 10. DAYNAME()
+
+Returns weekday name.
+
+SELECT DAYNAME('2025-11-14');
+
+
+Output:
+
+Friday
+
+✅ 11. MONTHNAME()
+
+Returns month name.
+
+SELECT MONTHNAME('2025-11-14');
+
+
+Output:
+
+November
+
+✅ 12. DAYOFWEEK()
+
+1 = Sunday, 7 = Saturday.
+
+SELECT DAYOFWEEK('2025-11-14');
+
+
+Output:
+
+6
+
+
+(Friday)
+
+✅ 13. DAYOFYEAR()
+
+Returns day number in year.
+
+SELECT DAYOFYEAR('2025-11-14');
+
+
+Output:
+
+318
+
+✅ 14. WEEK()
+
+Week number of the year.
+
+SELECT WEEK('2025-11-14');
+
+
+Output:
+
+46
+
+✅ 15. QUARTER()
+
+Which quarter of the year.
+
+SELECT QUARTER('2025-11-14');
+
+
+Output:
+
+4
+
+✅ 16. ADDDATE() / DATE_ADD()
+
+Adds days or intervals.
+
+SELECT ADDDATE('2025-11-14', 10);
+
+
+Output:
+
+2025-11-24
+
+
+Interval example:
+
+SELECT DATE_ADD('2025-11-14', INTERVAL 2 MONTH);
+
+
+Output:
+
+2026-01-14
+
+✅ 17. SUBDATE() / DATE_SUB()
+
+Subtract days or intervals.
+
+SELECT SUBDATE('2025-11-14', 5);
+
+
+Output:
+
+2025-11-09
+
+
+Interval:
+
+SELECT DATE_SUB('2025-11-14', INTERVAL 1 YEAR);
+
+
+Output:
+
+2024-11-14
+
+✅ 18. DATEDIFF()
+
+Difference between dates (in days).
+
+SELECT DATEDIFF('2025-12-01', '2025-11-14');
+
+
+Output:
+
+17
+
+✅ 19. TIMEDIFF()
+
+Difference between times.
+
+SELECT TIMEDIFF('10:30:00', '08:15:00');
+
+
+Output:
+
+02:15:00
+
+✅ 20. DATE_FORMAT()
+
+Format date into custom format.
+
+SELECT DATE_FORMAT('2025-11-14', '%d-%M-%Y');
+
+
+Output:
+
+14-November-2025
+
+
+Another:
+
+SELECT DATE_FORMAT('2025-11-14', '%W, %M %d %Y');
+
+
+Output:
+
+Friday, November 14 2025
+
+✅ 21. STR_TO_DATE()
+
+Convert string → date.
+
+SELECT STR_TO_DATE('14-11-2025', '%d-%m-%Y');
+
+
+Output:
+
+2025-11-14
+
+✅ 22. LAST_DAY()
+
+Returns the last day of a month.
+
+SELECT LAST_DAY('2025-11-10');
+
+
+Output:
+
+2025-11-30
+
+✅ 23. MAKEDATE()
+
+Year + day-of-year → date.
+
+SELECT MAKEDATE(2025, 100);
+
+
+Output:
+
+2025-04-10
+
+✅ 24. MAKETIME()
+
+Make time from hour, minute, second.
+
+SELECT MAKETIME(10, 30, 45);
+
+
+Output:
+
+10:30:45
+
+✅ 25. EXTRACT()
+
+Extract specific part of date.
+
+SELECT EXTRACT(YEAR FROM '2025-11-14');
+
+
+Output:
+
+2025
+
+⭐ BONUS: MOST ASKED IN INTERVIEWS
+Convert date format
+SELECT DATE_FORMAT(NOW(), '%Y/%m/%d');
+
+Age calculation
+SELECT TIMESTAMPDIFF(YEAR, '1999-05-12', CURDATE());
+
+
+Output (example):
+
+26
