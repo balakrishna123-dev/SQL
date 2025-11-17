@@ -1,0 +1,221 @@
+✅ SUBQUERIES in MySQL – Complete Explanation
+
+A subquery (also called inner query or nested query) is a query inside another query.
+
+You place a subquery inside:
+
+WHERE
+
+FROM
+
+SELECT
+
+HAVING
+
+INSERT / UPDATE / DELETE
+
+Subqueries are always executed before the main query.
+
+🎯 WHY Subqueries Are Used?
+
+To filter data based on another result.
+
+To compare values with dynamically calculated values.
+
+To return values for conditions.
+
+To replace joins (sometimes).
+
+🔥 Types of Subqueries
+
+MySQL supports 5 major types:
+
+1️⃣ Single-Row Subquery
+
+Returns one row only.
+
+Used with operators:
+
+=, <, >, >=, <=
+
+Example (Sakila)
+
+Find films that have the same rental rate as ACADEMY DINOSAUR:
+
+SELECT title, rental_rate
+FROM film
+WHERE rental_rate = (
+    SELECT rental_rate
+    FROM film
+    WHERE title = 'ACADEMY DINOSAUR'
+);
+
+2️⃣ Multi-Row Subquery
+
+Returns multiple rows.
+
+Used with:
+
+IN
+
+ANY
+
+ALL
+
+Example using IN
+
+Find actors who acted in films with rating “PG”:
+
+SELECT actor_id, first_name, last_name
+FROM actor
+WHERE actor_id IN (
+    SELECT actor_id
+    FROM film_actor
+    WHERE film_id IN (
+        SELECT film_id
+        FROM film
+        WHERE rating = 'PG'
+    )
+);
+
+3️⃣ Multi-Column Subquery
+
+Returns multiple columns.
+
+SELECT film_id, title, rental_rate
+FROM film
+WHERE (rental_rate, replacement_cost) IN (
+    SELECT rental_rate, replacement_cost
+    FROM film
+    WHERE rating = 'PG'
+);
+
+4️⃣ Correlated Subquery
+
+Subquery depends on the outer query, runs row-by-row.
+
+Example
+
+List actors who acted in more than 20 films:
+
+SELECT a.actor_id, a.first_name, a.last_name
+FROM actor a
+WHERE (
+    SELECT COUNT(*)
+    FROM film_actor fa
+    WHERE fa.actor_id = a.actor_id
+) > 20;
+
+
+📌 This subquery executes once for each actor.
+
+5️⃣ Nested Subqueries
+
+A subquery inside another subquery.
+
+Example
+
+List customers who rented films from the store located in “California”:
+
+SELECT customer_id, first_name, last_name
+FROM customer
+WHERE store_id = (
+    SELECT store_id
+    FROM store
+    WHERE address_id = (
+        SELECT address_id
+        FROM address
+        WHERE district = 'California'
+    )
+);
+
+🏛 WHERE Clause Subqueries
+
+Most common usage.
+
+Example
+
+Films with rental rate greater than the average rental rate:
+
+SELECT film_id, title, rental_rate
+FROM film
+WHERE rental_rate > (
+    SELECT AVG(rental_rate) FROM film
+);
+
+📦 FROM Clause Subquery (Derived Table / Inline View)
+
+Used when you need a temporary table.
+
+Example
+
+Get top 3 film categories by film count:
+
+SELECT category_name, film_count
+FROM (
+    SELECT c.name AS category_name, COUNT(*) AS film_count
+    FROM film_category fc
+    JOIN category c ON fc.category_id = c.category_id
+    GROUP BY c.name
+) AS temp
+ORDER BY film_count DESC
+LIMIT 3;
+
+🔍 SELECT Clause Subquery
+
+Used to add additional calculated columns.
+
+Example
+
+List films with number of actors in each film:
+
+SELECT 
+    f.film_id,
+    f.title,
+    (SELECT COUNT(*)
+     FROM film_actor fa
+     WHERE fa.film_id = f.film_id) AS actor_count
+FROM film f;
+
+📥 Subqueries with INSERT
+
+Insert customer IDs who rented more than 50 films into another table:
+
+INSERT INTO VIP_CUSTOMERS (customer_id)
+SELECT customer_id
+FROM customer
+WHERE customer_id IN (
+    SELECT customer_id
+    FROM rental
+    GROUP BY customer_id
+    HAVING COUNT(*) > 50
+);
+
+🛠 Subqueries with UPDATE
+
+Increase rental rate for films longer than average length:
+
+UPDATE film
+SET rental_rate = rental_rate + 1
+WHERE length > (
+    SELECT AVG(length) FROM film
+);
+
+❌ Subqueries with DELETE
+
+Delete customers who never rented anything:
+
+DELETE FROM customer
+WHERE customer_id NOT IN (
+    SELECT customer_id FROM rental
+);
+
+📌 Important Operators Used with Subqueries
+🔹 IN
+WHERE actor_id IN (subquery)
+
+🔹 ANY
+WHERE rental_rate > ANY (subquery)
+
+🔹 ALL
+WHERE rental_rate > ALL (subquery)
