@@ -1,133 +1,146 @@
 
-SQL Practice Questions
+
+_SQL Practice Questions
 ---------------------------------
-🧠 SQL Practice Questions with Answers (Using Sakila Database)
-1️⃣ Get all customers whose first name starts with 'J' and who are active.
 
-Explanation: Use LIKE 'J%' for pattern matching and filter with active = 1.
 
-SELECT customer_id, first_name, last_name, email
-FROM customer
-WHERE first_name LIKE 'J%' AND active = 1;
+1. Get all customers whose first name starts with 'J' and who are active.
+select * from customer
+where first_name like 'J%' and active=1 
 
-2️⃣ Find all films where the title contains the word 'ACTION' or the description contains 'WAR'.
-SELECT film_id, title, description
-FROM film
-WHERE title LIKE '%ACTION%' OR description LIKE '%WAR%';
-
-3️⃣ List all customers whose last name is not 'SMITH' and whose first name ends with 'a'.
-SELECT customer_id, first_name, last_name
-FROM customer
-WHERE last_name <> 'SMITH' AND first_name LIKE '%a';
-
-4️⃣ Get all films where the rental rate is greater than 3.0 and the replacement cost is not null.
-SELECT film_id, title, rental_rate, replacement_cost
-FROM film
-WHERE rental_rate > 3.0 AND replacement_cost IS NOT NULL;
-
-5️⃣ Count how many customers exist in each store who have active status = 1.
-SELECT store_id, COUNT(customer_id) AS active_customers
+2. Find all films where the title contains the word 'ACTION' or the description contains 'WAR'.
+select title,description from film
+where  title like '%ACTION%' or description like '%WAR%' 
+3. List all customers whose last name is not 'SMITH' and whose first name ends with 'a'.
+select Last_name,first_name from customer
+where last_name!='SMITH' and first_name like'%e'
+4. Get all films where the rental rate is greater than 3.0 and the replacement cost is not null.
+select * from film 
+where rental_rate>3.0 and replacement_cost is not null;
+5.Count how many customers exist in each store who have active status = 1.
+SELECT store_id,
+       COUNT(customer_id) AS active_customers
 FROM customer
 WHERE active = 1
 GROUP BY store_id;
 
-6️⃣ Show distinct film ratings available in the film table.
-SELECT DISTINCT rating
-FROM film;
+6. Show distinct film ratings available in the film table.
+select distinct rating from film;
 
-7️⃣ Find the number of films for each rental duration where the average length is more than 100 minutes.
-SELECT rental_duration, COUNT(*) AS total_films, AVG(length) AS avg_length
+select rental_duration from film;
+
+7. Find the number of films for each rental duration where the average length is more than 100 minutes.
+SELECT rental_duration,
+       COUNT(film_id) AS film_count
 FROM film
 GROUP BY rental_duration
 HAVING AVG(length) > 100;
 
-8️⃣ List payment dates and total amount paid per date, but only include days where more than 100 payments were made.
-SELECT payment_date, SUM(amount) AS total_amount, COUNT(payment_id) AS total_payments
-FROM payment
-GROUP BY DATE(payment_date)
-HAVING COUNT(payment_id) > 100;
+8. List payment_date and total amount paid per date, but only include days where more than 100 payments were made.
+select count(payment_id),payment_date,sum(amount)as total_amount
+from payment
+group by payment_date
+having count(payment_id)>100;
+9. Find customers whose email address is null or ends with '.org'.
+select  email from customer
+where email is not null or email like '%.org'
 
-9️⃣ Find customers whose email address is null or ends with '.org'.
-SELECT customer_id, first_name, last_name, email
-FROM customer
-WHERE email IS NULL OR email LIKE '%.org';
+customerspayment
+10. List all films with rating 'PG' or 'G', and order them by rental rate in descending order.
+select title,rental_rate,rating from film
+where rating = 'NC-17' or rating= 'PG-13'
+order by rental_rate desc;
+--or--
+select distinct rating from film;
+select title,rental_rate,rating from film
+where rating IN('NC-17','PG-13')
+order by rental_rate desc;
 
-🔟 List all films with rating 'PG' or 'G', and order them by rental rate in descending order.
-SELECT film_id, title, rating, rental_rate
-FROM film
-WHERE rating IN ('PG', 'G')
-ORDER BY rental_rate DESC;
-
-11️⃣ Count how many films exist for each length where the film title starts with 'T' and the count is more than 5.
+select * from film;
+11. Count how many films exist for each length where the film title starts with 'T' and the count is more than 5.
 SELECT length, COUNT(film_id) AS film_count
 FROM film
 WHERE title LIKE 'T%'
 GROUP BY length
 HAVING COUNT(film_id) > 5;
 
-12️⃣ List all actors who have appeared in more than 10 films.
-SELECT a.actor_id, a.first_name, a.last_name, COUNT(fa.film_id) AS film_count
-FROM actor a
-JOIN film_actor fa ON a.actor_id = fa.actor_id
-GROUP BY a.actor_id, a.first_name, a.last_name
-HAVING COUNT(fa.film_id) > 10;
+12. List all actors who have appeared in more than 10 films.
 
-13️⃣ Find the top 5 films with the highest rental rates and longest lengths combined.
-SELECT film_id, title, rental_rate, length
+SELECT f.first_name, f.last_name, COUNT(fa.film_id) AS film_count
+FROM actor AS f
+JOIN film_actor AS fa 
+  ON f.actor_id = fa.actor_id
+GROUP BY f.actor_id, f.first_name, f.last_name
+HAVING COUNT(fa.film_id) > 10
+ORDER BY film_count DESC;
+
+13. Find the top 5 films with the highest rental rates and longest lengths combined, ordering by rental rate first and length second.
+SELECT title, rental_rate, length
 FROM film
 ORDER BY rental_rate DESC, length DESC
 LIMIT 5;
-
-14️⃣ Show all customers along with the total number of rentals they have made, ordered from most to least rentals.
-SELECT c.customer_id, c.first_name, c.last_name, COUNT(r.rental_id) AS total_rentals
+14. Show all customers along with the total number of rentals they have made, ordered from most to least rentals.
+SELECT 
+    c.customer_id,
+    CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
+    COUNT(r.rental_id) AS total_rentals
 FROM customer c
-JOIN rental r ON c.customer_id = r.customer_id
-GROUP BY c.customer_id, c.first_name, c.last_name
+LEFT JOIN rental r ON c.customer_id = r.customer_id
+GROUP BY c.customer_id
 ORDER BY total_rentals DESC;
 
-15️⃣ List the film titles that have never been rented.
-SELECT f.film_id, f.title
-FROM film f
-LEFT JOIN inventory i ON f.film_id = i.film_id
-LEFT JOIN rental r ON i.inventory_id = r.inventory_id
-WHERE r.rental_id IS NULL;
+15. List the film titles that have never been rented.
+SELECT title
+FROM film
+WHERE film_id NOT IN (
+    SELECT DISTINCT film_id
+    FROM inventory
+    JOIN rental USING(inventory_id)
+);
 
-16️⃣ Find all staff members along with the total payments they have processed, ordered by total payment amount.
-SELECT s.staff_id, s.first_name, s.last_name, SUM(p.amount) AS total_amount
+16. Find all staff members along with the total payments they have processed, ordered by total payment amount in descending order.
+SELECT 
+    s.staff_id,
+    CONCAT(s.first_name, ' ', s.last_name) AS staff_name,
+    SUM(p.amount) AS total_payments
 FROM staff s
 JOIN payment p ON s.staff_id = p.staff_id
-GROUP BY s.staff_id, s.first_name, s.last_name
-ORDER BY total_amount DESC;
-
-17️⃣ Show the category name along with the total number of films in each category.
-SELECT c.name AS category_name, COUNT(fc.film_id) AS total_films
+GROUP BY s.staff_id
+ORDER BY total_payments DESC;
+17. Show the category name along with the total number of films in each category.
+SELECT 
+    c.name AS category_name,
+    COUNT(fc.film_id) AS film_count
 FROM category c
 JOIN film_category fc ON c.category_id = fc.category_id
-GROUP BY c.name
-ORDER BY total_films DESC;
-
-18️⃣ List the top 3 customers who have spent the most money in total.
-SELECT c.customer_id, c.first_name, c.last_name, SUM(p.amount) AS total_spent
+GROUP BY c.category_id;
+18. List the top 3 customers who have spent the most money in total.
+SELECT 
+    c.customer_id,
+    CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
+    SUM(p.amount) AS total_spent
 FROM customer c
 JOIN payment p ON c.customer_id = p.customer_id
-GROUP BY c.customer_id, c.first_name, c.last_name
+GROUP BY c.customer_id
 ORDER BY total_spent DESC
 LIMIT 3;
-
-19️⃣ Find all films that were rented in the month of May (any year) and have a rental duration greater than 5 days.
-SELECT DISTINCT f.film_id, f.title, f.rental_duration
-FROM film f
-JOIN inventory i ON f.film_id = i.film_id
-JOIN rental r ON i.inventory_id = r.inventory_id
-WHERE MONTH(r.rental_date) = 5 AND f.rental_duration > 5;
-
-20️⃣ Get the average rental rate for each film category, but only include categories with more than 50 films.
-SELECT c.name AS category_name, AVG(f.rental_rate) AS avg_rental_rate, COUNT(f.film_id) AS total_films
+19. Find all films that were rented in the month of May (any year) and have a rental duration greater than 5 days.
+SELECT 
+    f.title,
+    r.rental_date,
+    DATEDIFF(r.return_date, r.rental_date) AS rental_days
+FROM rental r
+JOIN inventory i ON r.inventory_id = i.inventory_id
+JOIN film f ON i.film_id = f.film_id
+WHERE MONTH(r.rental_date) = 5
+  AND DATEDIFF(r.return_date, r.rental_date) > 5;
+20. Get the average rental rate for each film category, but only include categories with more than 50 films.
+SELECT 
+    c.name AS category_name,
+    AVG(f.rental_rate) AS avg_rental_rate
 FROM category c
 JOIN film_category fc ON c.category_id = fc.category_id
 JOIN film f ON fc.film_id = f.film_id
-GROUP BY c.name
-HAVING COUNT(f.film_id) > 50
-ORDER BY avg_rental_rate DESC;
-
+GROUP BY c.category_id
+HAVING COUNT(fc.film_id) > 50;
 
