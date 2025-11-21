@@ -1,0 +1,101 @@
+
+
+Cardinality:
+
+Types of cardinality:          
+high cardinality:    EX:(more unique values:Email, phone number, customer_id)
+medium cardinality;  EX:(Some repated+some unique, city, state, film title) 
+low  Cardinality:    EX(Very few unique values	gender ,(M/F), status (Y/N), category_id
+
+  There are 4Types of Relation ships in Cardinality
+  
+
+ONe- one
+
+ Examples
+Customer	   Cart
+Customer 101	Cart 501
+Customer 102	Cart 502
+Example 2: Person ↔ Passport
+
+One person has one passport.
+
+One passport belongs to one person.
+
+One-to-Many
+Example 1: Customer → Address
+
+One customer can save many addresses (Home, Office, Friend).
+
+But each address belongs to only one customer.
+
+ one-to many
+ Examples:
+Customer	Address
+C101	Home Address
+C101	Office Address
+C101	Friend Address
+
+Many-to-Many (M:N) — Examples
+Example 1: Cart ↔ Products
+
+One cart can have many products.
+
+One product can be added to many customers’ carts.
+
+
+Many-to many
+
+Cart	Product
+Cart 501	Product 10
+Cart 501	Product 20
+Cart 601	Product 10
+Cart 601	Product 30
+
+Bridge Table: to break many-many realtionships into one -many raltion
+ 
+Joins:
+Inner join: return matched columns on both table
+left join: return all columns from left table and matched rows from right table
+right join:return all columns from  Right table and matched rows from left table
+full join: combine both table
+cross join: Permutation and combination of each record
+
+Inner Join:
+SELECT c.first_name, p.amount
+FROM customer c
+INNER JOIN payment p
+  ON c.customer_id = p.customer_id;
+  
+left join:
+SELECT c.first_name, p.amount
+FROM customer c
+LEFT JOIN payment p
+  ON c.customer_id = p.customer_id;  
+  
+  Right JOin:
+  SELECT c.first_name, p.amount
+FROM customer c
+RIGHT JOIN payment p
+  ON c.customer_id = p.customer_id;
+  
+  FULL Join:
+  SELECT c.customer_id, p.amount
+FROM customer c
+LEFT JOIN payment p
+  ON c.customer_id = p.customer_id
+UNION
+SELECT c.customer_id, p.amount
+FROM customer c
+RIGHT JOIN payment p
+  ON c.customer_id = p.customer_id;
+  
+  
+  Cross Join:
+  SELECT f.title, c.name
+FROM film f
+CROSS JOIN category c;
+  
+  
+  
+
