@@ -1,4 +1,189 @@
-1️⃣ String Functions
+-- STRING FUNCTIONS--
+
+1. LENGTH()
+--Returns the number of characters in a string--.
+SELECT first_name, LENGTH(first_name) AS len
+FROM actor
+LIMIT 5;
+
+
+2. UPPER()
+-- Converts text to uppercase--
+SELECT UPPER(first_name)
+FROM actor
+WHERE first_name = 'Penelope';
+
+
+3. LOWER()
+-- Converts text to lowercase.--
+SELECT LOWER(first_name)
+FROM actor
+WHERE first_name = 'ANGELINA';
+
+
+4. CONCAT()
+--Joins two or more strings---.
+SELECT CONCAT(first_name, ' ', last_name) AS full_name
+FROM actor
+LIMIT 5;
+
+
+5. SUBSTRING()
+--- Extracts a substring from a string.--
+SELECT SUBSTRING(first_name, 2, 4) AS sub_str
+FROM actor
+WHERE first_name = 'ANGELINA';
+
+
+6. LEFT() / RIGHT()
+---Returns leftmost or rightmost characters--
+SELECT LEFT(first_name, 3), RIGHT(first_name, 3)
+FROM actor
+WHERE first_name = 'ANGELINA';
+
+
+7. LPAD() / RPAD()
+--- Pads string with characters to the left or right.---
+SELECT LPAD(actor_id, 5, '0') AS padded_left,
+       RPAD(first_name, 10, '*') AS padded_right
+FROM actor
+LIMIT 5;
+
+
+8. LOCATE()
+---Returns position of substring in a string.
+SELECT LOCATE('E', first_name)
+FROM actor
+WHERE first_name = 'PENELOPE';
+
+
+9. SUBSTRING() + LOCATE()
+--- Use LOCATE to find position, then extract from that position--
+SELECT SUBSTRING(first_name, LOCATE('E', first_name)) AS after_E
+FROM actor
+WHERE first_name = 'PENELOPE';
+
+
+10. SUBSTRING_INDEX()
+--Splits string by delimiter and returns part of it.--
+SELECT SUBSTRING_INDEX(first_name, 'E', -1) AS after_last_E
+FROM actor
+WHERE first_name = 'PENELOPE';
+
+
+11. REPLACE()
+--Replaces substring with another string.--
+SELECT REPLACE(first_name, 'A', '@')
+FROM actor
+WHERE first_name = 'ANGELINA';
+
+
+12. REVERSE()
+---Reverses the string.---
+SELECT REVERSE(first_name)
+FROM actor
+WHERE first_name = 'ED';
+
+
+13. REGEXP
+--Matches string using regular expression.---
+SELECT first_name
+FROM actor
+WHERE first_name REGEXP '^A'
+LIMIT 5;
+
+-- NUMERIC FUNCTIONS--
+
+14. ROUND()
+---Rounds number to given decimal places.--
+SELECT ROUND(amount, 1)
+FROM payment
+LIMIT 5;
+
+
+CEIL() / FLOOR()
+-- Round number up or down to nearest integer.--
+SELECT CEIL(amount), FLOOR(amount)
+FROM payment
+LIMIT 5;
+
+
+16. MOD()
+--Returns remainder of division.--
+SELECT MOD(actor_id, 2) AS mod_value
+FROM actor
+LIMIT 5;
+
+
+17.ABS()
+-- Returns absolute value.--
+SELECT ABS(-amount) AS positive_amount
+FROM payment
+LIMIT 5;
+
+
+--TYPE & CONDITIONAL FUNCTIONS--
+
+18. CAST()
+-- Converts value from one data type to another.--
+SELECT CAST(amount AS CHAR)
+FROM payment
+LIMIT 5;
+
+
+19. CASE WHEN
+-- Conditional logic for queries.--
+SELECT amount,
+       CASE
+           WHEN amount > 10 THEN 'HIGH'
+           WHEN amount > 5 THEN 'MEDIUM'
+           ELSE 'LOW'
+       END AS category
+FROM payment
+LIMIT 5;
+
+
+20. COALESCE()
+--Returns first non-NULL value.--
+SELECT COALESCE(NULL, first_name)
+FROM actor
+LIMIT 1;
+
+
+--DATE FUNCTIONS---
+
+21. CURDATE() / NOW()
+-- Returns current date / datetime.--
+SELECT CURDATE(); 
+select now();
+
+
+22. DATE_ADD()
+--Adds interval to a date.--
+SELECT DATE_ADD(rental_date, INTERVAL 3 DAY)
+FROM rental
+LIMIT 5;
+
+
+23. DATEDIFF()
+-- Returns difference in days between two dates.--
+SELECT DATEDIFF(return_date, rental_date)
+FROM rental
+WHERE return_date IS NOT NULL
+LIMIT 5;
+
+
+
+
+
+
+
+
+
+
+
+
+1️:String Functions
 
 Used to work with text or character data (CHAR, VARCHAR, TEXT).
 
