@@ -1,0 +1,81 @@
+--Built in function---
+
+1. Identify duplicates in the customer table (without using customer_id)
+SELECT first_name, last_name, email, address_id, COUNT(*)
+FROM customer
+GROUP BY first_name, last_name, email, address_id
+HAVING COUNT(*) > 1;
+
+2. Number of times letter 'a' is repeated in film descriptions
+SELECT 
+SUM(LENGTH(description) - LENGTH(REPLACE(description, 'a', ''))) 
+AS total_a_count
+FROM film;
+
+3. Number of times each vowel appears in film descriptions
+SELECT
+    SUM(LENGTH(description) - LENGTH(REPLACE(description, 'a', ''))) AS a_count,
+    SUM(LENGTH(description) - LENGTH(REPLACE(description, 'e', ''))) AS e_count,
+    SUM(LENGTH(description) - LENGTH(REPLACE(description, 'i', ''))) AS i_count,
+    SUM(LENGTH(description) - LENGTH(REPLACE(description, 'o', ''))) AS o_count,
+    SUM(LENGTH(description) - LENGTH(REPLACE(description, 'u', ''))) AS u_count
+FROM film;
+
+4. Payments made by each customer (month-wise, year-wise, week-wise)
+A. Month-wise
+SELECT customer_id, DATE_FORMAT(payment_date, '%Y-%m') AS month, 
+SUM(amount) AS total_amount
+FROM payment
+GROUP BY customer_id, month;
+
+-- Year-wise-
+SELECT customer_id, YEAR(payment_date) AS year,
+ SUM(amount) AS total_amount
+FROM payment
+GROUP BY customer_id, year;
+
+-- Week-wise--
+SELECT customer_id, YEARWEEK(payment_date) AS year_week, 
+SUM(amount) AS total_amount
+FROM payment
+GROUP BY customer_id, year_week;
+
+5. Check if a given year is a leap year (hardcoded date)
+-- Consider for year 2024--
+SELECT 
+    CASE 
+        WHEN (YEAR('2024-01-01') % 400 = 0) 
+          OR (YEAR('2024-01-01') % 4 = 0 AND YEAR('2024-01-01') % 100 != 0)
+        THEN 'Leap Year'
+        ELSE 'Not a Leap Year'
+    END AS result;
+
+6. Display number of days remaining in current year
+SELECT 
+DATEDIFF('2025-12-31', CURDATE()  
+    ) AS days_remaining;
+
+
+7. Display quarter number (Q1–Q4) for payment dates
+SELECT payment_id, payment_date,
+       CONCAT('Q', QUARTER(payment_date)) AS quarter_number
+FROM payment;
+
+8. Display age in years, months, days (use your DOB)
+
+Replace '2002-09-15' with your DoB.
+
+SELECT 
+CONCAT(
+TIMESTAMPDIFF(YEAR, '2002-09-15', CURDATE()), ' years, ',
+TIMESTAMPDIFF(MONTH, '2002-09-15', CURDATE()) % 12, ' months, ',
+DATEDIFF(
+		CURDATE(),
+		DATE_ADD(
+		DATE_ADD('2002-09-15', INTERVAL TIMESTAMPDIFF(YEAR, '2002-09-15', CURDATE()) YEAR),
+                INTERVAL (TIMESTAMPDIFF(MONTH, '2002-09-15', CURDATE()) % 12) MONTH
+            )
+        ), ' days'
+    ) AS age;
+    
+    
